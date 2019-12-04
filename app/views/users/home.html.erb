@@ -1,0 +1,238 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="owl-carousel owl-theme" data-plugin-options="{'items': 1, 'margin': 10}">
+            <div>
+                <span class="img-thumbnail">
+                    <img alt="" height="300" class="img-responsive" src="/img/team/team-3.jpg">
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <% @user.name.blank? ? n = "User..." : n = @user.name %>
+        <h2 class="mb-none"><strong><%= n %></strong></h2>
+        <% @user.role == 2 ? r = "Administrator" : r = "Vip members" %>
+        <h4 class="heading-primary"><i class="fa fa-user-secret"></i><%= r %></h4>
+
+        <hr class="solid">
+
+        <ul class="list list-icons">
+            <li><i class="fa fa-fa"></i> Tên: <%= @user.name %></li>
+            <li><i class="icon-user icons"></i> Email: <%= @user.email %></li>
+            <li><i class="fa fa-newspaper-o"></i> Tổng số bài post: <%= @user.posts.count%></li>
+        </ul>
+
+    </div>
+</div>
+<div class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Profiles</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#popular" data-toggle="tab"><i class="fa fa-star"></i> Your Profiles</a>
+                    </li>
+                    <li>
+                        <a href="#recent" data-toggle="tab">Test Session | Posts</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="popular" class="tab-pane active">
+                        <form class="form-horizontal form-bordered" method="post" accept-charset="UTF-8"
+                            action="/users/update">
+                            <%= csrf %>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputReadOnly">ID</label>
+                                <div class="col-md-6">
+                                    <input type="text" value="<%= @user.id %>" id="user_id" class="form-control"
+                                        readonly="readonly" name="user[id]">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputReadOnly">Email</label>
+                                <div class="col-md-6">
+                                    <input type="text" value="<%= @user.email %>" id="user_email" class="form-control"
+                                        readonly="readonly" name="user[email]">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputHelpText">Tên</label>
+                                <div class="col-md-6">
+                                    <input name="user[name]" type="text" class="form-control"
+                                        value="<%= @user.name %>">
+                                    <!-- <span class="help-block">Nội dung của phiên thi.</span> -->
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputHelpText">Update Password</label>
+                                <div class="col-md-6">
+                                    <input name="user[password]" type="password" class="form-control" placeholder="***********">
+                                    <span class="help-block">Password chứa ít nhất 6 kí tự!</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">File Upload</label>
+                                <div class="col-md-6">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="input-append">
+
+                                            <span class="btn btn-default btn-file">
+                                                <%# <span class="fileupload-exists">Change</span>
+                                                <span class="fileupload-new">Select file</span> %>
+                                                <input type="file" name="session[file_upload]" />
+                                            </span>
+                                            <a href="#" class="btn btn-default fileupload-exists"
+                                                data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <p>
+                                        <button class="btn btn-3d btn-secondary mr-xs mb-sm" name="user[submit]"
+                                            type="submit" value="save">Save</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="recent" class="tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tabs tabs-vertical tabs-left">
+                                    <ul class="nav nav-tabs col-sm-3">
+                                        <li class="active">
+                                            <a href="#testSessionSearch" data-toggle="tab">
+                                                <span>
+                                                    <i class="fa fa-star"></i> Test Sessions <span
+                                                        class="label label-default"><%= @test_session_results.count%></span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#postSearch" data-toggle="tab">
+                                                <span>
+                                                    Post <span
+                                                        class="label label-default"><%= @post_results.count%></span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="testSessionSearch" class="tab-pane active">
+                                            <% @test_session_results.each do |test_session|%>
+                                            <div class="col-md-12">
+                                                <div class="recent-posts">
+                                                    <article class="post">
+                                                        <div class="date">
+                                                            <span
+                                                                class="day"><%= test_session.created_at.strftime("%d") %></span>
+                                                            <span
+                                                                class="month"><%= test_session.created_at.strftime("%b") %></span>
+                                                        </div>
+                                                        <% t = TestPaper.where(user_id: current_user.id, test_session_id: test_session.id)%>
+                                                        <% if t.exists?
+                                                            if t.last.point != nil
+                                                                d = t.last.point
+                                                                max = t.last.exam.list_questions.split(",").count
+                                                                mesg = "[Điểm: "+d.to_s+"/"+max.to_s+"]"
+                                                            else
+                                                                mesg = "[Chưa có kết quả]"
+                                                            end 
+                                                        else
+                                                            mesg = "[Chưa có kết quả]"
+                                                        end %>
+
+                                                        <h4><a
+                                                                href="/test_sessions/<%= test_session.id %>"><%= test_session.content[0..50] +" | "+ mesg%></a>
+                                                        </h4>
+                                                        <p></p>
+                                                        <div class="post-meta">
+                                                            <span><i
+                                                                    class="fa fa-calendar"></i><%= test_session.created_at.strftime("%b %d, %Y") %></span>
+                                                            <span><i class="fa fa-user"></i> By
+                                                                <a href="/users/<%= test_session.user.id %>">
+                                                                    <% if test_session.user.name.blank? %>
+                                                                    <%= test_session.user.email %>
+                                                                    <% else %>
+                                                                    <%= test_session.user.name %>
+                                                                    <% end %>
+                                                                </a>
+                                                            </span>
+
+                                                            <hr class="solid">
+
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </div>
+                                            <% end %>
+                                        </div>
+                                        <div id="postSearch" class="tab-pane">
+                                            <% @post_results.each do |post|%>
+                                            <div class="col-md-12">
+                                                <div class="recent-posts">
+                                                    <article class="post">
+                                                        <div class="date">
+                                                            <span
+                                                                class="day"><%= post.created_at.strftime("%d") %></span>
+                                                            <span
+                                                                class="month"><%= post.created_at.strftime("%b") %></span>
+                                                        </div>
+                                                        <h4><a
+                                                                href="/posts/<%= post.id %>"><%= post.title[0..50]%></a>
+                                                        </h4>
+                                                        <p></p>
+                                                        <div class="post-meta">
+                                                            <span><i
+                                                                    class="fa fa-calendar"></i><%= post.created_at.strftime("%b %d, %Y") %></span>
+                                                            <span><i class="fa fa-user"></i> By
+                                                                <a href="/users/<%= post.user.id %>">
+                                                                    <% if post.user.name.blank? %>
+                                                                    <%= post.user.email %>
+                                                                    <% else %>
+                                                                    <%= post.user.name %>
+                                                                    <% end %>
+                                                                </a>
+                                                            </span>
+                                                            <span><i class="fa fa-tag"></i>
+                                                                <% post.tags.split(",").each do |tag|%>
+                                                                <a href="/search/?t=<%= tag %>"><%= tag %></a>,
+                                                                <% end %>
+                                                            </span>
+                                                            <span>
+                                                                <i class="fa fa-comments"></i>
+                                                                <a href="#"><%= post.comments.count %> Comments</a>
+                                                            </span>
+
+                                                            <hr class="solid">
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </div>
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

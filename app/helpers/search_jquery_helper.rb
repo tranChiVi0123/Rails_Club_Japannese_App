@@ -1,0 +1,2 @@
+module SearchJqueryHelper
+end

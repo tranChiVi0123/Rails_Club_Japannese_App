@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-md-12">
+        <hr class="tall">
+        <h4><%= @no_results %> Kết quả tìm kiếm</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tabs tabs-vertical tabs-left">
+            <ul class="nav nav-tabs col-sm-3">
+                <li class="active">
+                    <a href="#testSessionSearch" data-toggle="tab">
+                        <span>
+                            <i class="fa fa-star"></i> Test Sessions <span
+                                class="label label-default"><%= @test_session_results.count%></span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#postSearch" data-toggle="tab">
+                        <span>
+                            Post <span class="label label-default"><%= @post_results.count%></span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#userSearch" data-toggle="tab">
+                        <span>
+                            User <span class="label label-default"><%= @user_results.count%></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="testSessionSearch" class="tab-pane active">
+                    <% @test_session_results.each do |test_session|%>
+                    <div class="col-md-12">
+                        <div class="recent-posts">
+                            <article class="post">
+                                <div class="date">
+                                    <span class="day"><%= test_session.created_at.strftime("%d") %></span>
+                                    <span class="month"><%= test_session.created_at.strftime("%b") %></span>
+                                </div>
+                                <h4><a
+                                        href="/test_sessions/<%= test_session.id %>"><%= test_session.content[0..50]%></a>
+                                </h4>
+                                <p></p>
+                                <div class="post-meta">
+                                    <span><i
+                                            class="fa fa-calendar"></i><%= test_session.created_at.strftime("%b %d, %Y") %></span>
+                                    <span><i class="fa fa-user"></i> By
+                                        <a href="/users/<%= test_session.user.id %>">
+                                            <% if test_session.user.name.blank? %>
+                                            <%= test_session.user.email %>
+                                            <% else %>
+                                            <%= test_session.user.name %>
+                                            <% end %>
+                                        </a>
+                                    </span>
+
+                                    <hr class="solid">
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <% end %>
+                </div>
+                <div id="postSearch" class="tab-pane">
+                    <% @post_results.each do |post|%>
+                    <div class="col-md-12">
+                        <div class="recent-posts">
+                            <article class="post">
+                                <div class="date">
+                                    <span class="day"><%= post.created_at.strftime("%d") %></span>
+                                    <span class="month"><%= post.created_at.strftime("%b") %></span>
+                                </div>
+                                <h4><a href="/posts/<%= post.id %>"><%= post.title[0..50]%></a>
+                                </h4>
+                                <p></p>
+                                <div class="post-meta">
+                                    <span><i
+                                            class="fa fa-calendar"></i><%= post.created_at.strftime("%b %d, %Y") %></span>
+                                    <span><i class="fa fa-user"></i> By
+                                        <a href="/users/<%= post.user.id %>">
+                                            <% if post.user.name.blank? %>
+                                            <%= post.user.email %>
+                                            <% else %>
+                                            <%= post.user.name %>
+                                            <% end %>
+                                        </a>
+                                    </span>
+                                    <span><i class="fa fa-tag"></i>
+                                        <% post.tags.split(",").each do |tag|%>
+                                        <a href="/search/?t=<%= tag %>"><%= tag %></a>,
+                                        <% end %>
+                                    </span>
+                                    <span>
+                                        <i class="fa fa-comments"></i>
+                                        <a href="#"><%= post.comments.count %> Comments</a>
+                                    </span>
+
+                                    <hr class="solid">
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <% end %>
+                </div>
+                <div id="userSearch" class="tab-pane">
+                    <% @user_results.each do |user|%>
+                    <div class="col-md-12">
+                        <div class="recent-posts">
+                            <article class="post">
+                                <h4><a href="/users/<%= user.id %>">
+                                        <% if user.name.blank? %>
+                                        <%= user.email %>
+                                        <% else %>
+                                        <%= user.name %>
+                                        <% end %>
+                                    </a>
+                                </h4>
+                                <p></p>
+                                <div class="post-meta">
+                                    <span>
+                                        <i class="fa fa-file-text-o"></i> 
+                                        <%= user.posts.count %> bài viết
+                                    </span>
+                                    <span>
+                                        <i class="fa fa-info"></i> 
+                                        <%= user.email %> 
+                                    </span>
+                                    
+                                    <span>
+                                        <% if user.role == 2 %>
+                                        <i class="fa fa-heart"></i> 
+                                        Quản trị viên
+                                        <% else %>
+                                        <i class="fa fa-github-alt"></i>
+                                        Fan cứng
+                                        <% end %>
+                                    </span>
+                                    
+                                </div>
+                                <hr class="solid">
+                        </div>
+                        </article>
+                    </div>
+                    <% end %>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

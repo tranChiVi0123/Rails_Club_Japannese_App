@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Exams</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal form-bordered" id="edit_exam_form" method="post" accept-charset="UTF-8"
+                action="/exams/update">
+                <%= csrf %>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="inputReadOnly">ID</label>
+                    <div class="col-md-6">
+                        <input type="text" value="<%= @exam.id %>" class="form-control" readonly="readonly"
+                            name="exam[id]">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="inputReadOnly">Title</label>
+                    <div class="col-md-6">
+                        <input type="text" value="<%= @exam.title %>" class="form-control" name="exam[title]">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="inputReadOnly">Category</label>
+                    <div class="col-md-6">
+                        <input type="text" value="<%= @exam.category.title %>" class="form-control"
+                            name="exam[category]">
+                    </div>
+                </div>
+                <% txt = "" 
+                temp = @exam.list_questions.split(",")
+                temp.each do |question_id|
+                    txt += question_id + "\r\n"
+                end %>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="inputHelpText">List Questions</label>
+                    <div class="col-md-6">
+                        <textarea class="form-control" id="list_questions" name="exam[list_questions]" form="edit_exam_form" cols="50"
+                            rows="10" placeholder="Ctrl+Shift+F để tìm câu hỏi"><%= txt %></textarea>
+                        <span class="help-block">Ctrl+Shift+F để tìm câu hỏi</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <p>
+                            <button class="btn btn-3d btn-secondary mr-xs mb-sm" name="exam[submit]" type="submit"
+                                value="save">Save</button>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="formModalLabel">Nhập vào ô textbox để tìm Questions</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate">
+                            <div class="form-group mt-lg">
+                                <label class="col-sm-3 control-label">Content Question</label>
+                                <div class="col-sm-9">
+                                    <input id="changebox" type="text" name="name" class="form-control" placeholder="Type question..."
+                                        required />
+                                </div>
+                            </div>
+                            
+                           
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Comment</label>
+                                <div class="col-sm-9">
+                                    <textarea id="qtResult" rows="5" class="form-control" placeholder="Type your comment..."
+                                        required></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="btnAdd" type="button" class="btn btn-primary">Add Question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

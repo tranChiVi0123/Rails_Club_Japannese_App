@@ -1,0 +1,123 @@
+<%= form_for :exam, url: test_papers_page_path do |form| %>
+    <script>
+        var upgradeTime = <%= @timeRemaining %> ;
+        var seconds = upgradeTime;
+        function timer() {
+            var days        = Math.floor(seconds/24/60/60);
+            var hoursLeft   = Math.floor((seconds) - (days*86400));
+            var hours       = Math.floor(hoursLeft/3600);
+            var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+            var minutes     = Math.floor(minutesLeft/60);
+            var remainingSeconds = seconds % 60;
+        function pad(n) {
+            return (n < 10 ? "0" + n : n);postSearch
+        }
+        document.getElementById('countdown').innerHTML = pad(hours) + ":" + pad(minutes) + ":" + pad(remainingSeconds);
+        if (seconds == 0) {
+            clearInterval(countdownTimer);
+            document.getElementById('countdown').innerHTML = "Hết giờ làm bài!";
+             var element = $(".custom-control-label");
+                var arrayAnswer = [];
+                var checkbox = $(".custom-control-input");
+                for(var i=0;i<checkbox.length/4;i++){
+                    for(var j=0;j<4;j++){
+                        if(checkbox[i*4+j].checked==true){
+                            arrayAnswer[i]=element[i*4+j].id;
+                        }
+                    }
+                    if(arrayAnswer[i]==null){
+                        arrayAnswer[i]="x";
+                    }
+                }
+                $.post('/test_papers/final',
+                        {answers: arrayAnswer},
+                    );
+        } else {
+        seconds--;
+        }
+        }
+        var countdownTimer = setInterval('timer()', 1000);
+    </script>
+    <style type="text/css">
+        .flip-clock-wrapper{
+            
+            align:left;
+            background: aquamarine;
+            font-size: 3vh;
+            position: fixed;
+            cursor: pointer;
+            -webkit-user-select: none;
+            border:2px solid aqua;
+            color: darkslategray;
+        }
+        .text-right{
+            margin-right: 90px;
+            
+        }
+    </style>
+    
+    <div class="col text-right">
+            <span id="countdown" class="timer flip-clock-wrapper" type="" name="exam[save]" value="cc"></span>
+        </div>
+        <% @list = getAllQuestionID(@test_session_id)%>
+    <% $i=0 %>
+    <% @list.each do |li|%> 
+      <% $i+=1 %>
+        <% if $i%2==0 %>
+            <section class="container bg-success" data="<%= li%>">
+                <h4> 問題:<%= $i%> </h4>
+                <h4><%= markdown(Question.find(li).content) %></h4>
+                    <% @temp=eval(Question.find(li).answers)%>
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" id="ア">
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:a] %></label>
+                </div>
+                <div class="custom-radio custom-control">
+                    <label class="custom-control-label" id="イ" >
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:i] %></label>
+                </div>
+                <div class="custom-radio custom-control ">
+                    <label class="custom-control-label" id="ウ" >
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:u]%></label>
+                </div>
+                <% if @temp[:e].blank? == false %>
+                <div class="custom-radio custom-control">
+                    <label class="custom-control-label" id="エ" >
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:e]%></label>
+                </div>
+                <% end %>
+            </section>
+        <% else %>
+            <section class="container bg-warning" data="<%= li%>">
+                <h4> 問題:<%= $i%> </h4>
+                <h4><%= markdown(Question.find(li).content) %></h4>
+                    <% @temp=eval(Question.find(li).answers)%>
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" id="ア">
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:a] %></label>
+                </div>
+                <div class="custom-radio custom-control">
+                    <label class="custom-control-label" id="イ" >
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:i] %></label>
+                </div>
+                <div class="custom-radio custom-control ">
+                    <label class="custom-control-label" id="ウ" >
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:u]%></label>
+                </div>
+                <% if @temp[:e].blank? == false %>
+                <div class="custom-radio custom-control">
+                    <label class="custom-control-label" id="エ" >
+                    <input type="radio" class="custom-control-input" name=<%= $i %>> <%= @temp[:e]%></label>
+                </div>
+                <% end %>
+            </section>
+        <% end %>
+
+    <% end %>
+
+    </br>
+
+    
+    <button class="btn btn-primary btn-block" id="submit-btn" name="exams">Nộp bài</button>
+
+<% end %>

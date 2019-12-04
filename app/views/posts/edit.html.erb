@@ -1,0 +1,36 @@
+<div class="row">
+    <section class="panel panel-admin">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
+                <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>
+            </div>
+            <h2 class="panel-title"><b>Edit Post</b></h2>
+        </header>
+        <div class="panel-body">
+            <form id="create_post_form" class="form-horizontal form-bordered" method="post" action="/posts/update">
+                <%= csrf %>
+                <%= optionsForm("posts[id]", @post.id.to_s) %>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="text" name="posts[title]" class="form-control mr-3" placeholder="Nhập tiêu đề bài viết" value="<%= @post.title%>">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="posts[tags]" class="form-control" placeholder="tag1,tag2" value="<%= @post.tags%>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-9">
+                        <textarea id="create_post_textarea" class="form-control" form="create_post_form" name="posts[content]" placeholder="Nhập nội dung bài viết, hỗ trợ Markdown Language. Ctrl+Shift+H để tìm hiểu về kí pháp Markdown" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 80px;"><%= @post.content%></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <button name="posts[submit]" type="submit" class="btn btn-primary btn-lg">Chỉnh sửa bài viết</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+

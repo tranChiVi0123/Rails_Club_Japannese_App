@@ -1,0 +1,17 @@
+<div class="col-md-12">
+    <div class="recent-post">
+        <div class="post-content">
+            <div class="row">
+                <div class="row sample-icon-list">
+                    <% @exams.each do |exam|%>
+                    <div class="col-xs-12 col-md-6 col-lg-6 sample-icon">
+                        <a href="/exams/<%= exam.id%>/edit"><i class="icon-user icons"></i><span
+                                class="name"><b>Title:<%= exam.title %> |
+                                    Category:<%= exam.category.title%> <i class="fa fa-edit"></i></b></span></a>
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

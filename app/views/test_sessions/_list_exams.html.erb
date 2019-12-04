@@ -1,0 +1,39 @@
+<section class="panel panel-admin">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+            <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+        </div>
+        <h2 class="panel-title">Test Session - List Exams</h2>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal form-bordered" method="post" accept-charset="UTF-8" action="/test_sessions/update"
+            id="list_exams_form">
+            <%= csrf %>
+            <%= optionsForm("session", "exams")%>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="inputReadOnly">ID Test Session</label>
+                <div class="col-md-6">
+                    <input type="text" value="<%= @test_session.id %>" id="session_id" class="form-control"
+                        readonly="readonly" name="session[id]">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 control-label" for="inputHelpText">List Exams</div>
+                <div class="col-md-6">
+                    <% @txt1 = ""%>
+                    <% @list_exams.each do |id|%>
+                    <% @txt1 += Exam.find(id).title.to_s + "\r\n" %>
+                    <% end %>
+                    <textarea class="form-control" name="session[list_exams]" form="list_exams_form" cols="50"
+                        rows="10" value=""><%= @txt1 %></textarea>
+                    <span class="help-block"><i class="icon-notebook icons"></i> Xóa hoặc thêm dòng để chỉnh sửa đề
+                        thi</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-3d btn-secondary mr-xs mb-sm" name="commit" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</section>

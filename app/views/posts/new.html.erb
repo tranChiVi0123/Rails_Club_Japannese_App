@@ -1,0 +1,36 @@
+<div class="row">
+    <section class="panel panel-admin">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
+                <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>
+            </div>
+            <h2 class="panel-title"><b>Create Post</b></h2>
+        </header>
+        <div class="panel-body">
+            <form id="create_post_form" class="form-horizontal form-bordered" method="post" action="/posts/create">
+                <%= csrf %>
+                <%= optionsForm("posts", "create") %>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="text" name="posts[title]" class="form-control mr-3" placeholder="Nhập tiêu đề bài viết">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="posts[tags]" class="form-control" placeholder="tag1,tag2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-9">
+                        <textarea id="create_post_textarea" class="form-control" form="create_post_form" name="posts[content]" placeholder="Nhập nội dung bài viết, hỗ trợ Markdown Language. Ctrl+Shift+H để tìm hiểu về kí pháp Markdown" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <button name="posts[submit]" type="submit" class="btn btn-primary btn-lg">Tạo bài viết</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  list_exams: MyText
+  time_public: 2019-04-04 17:06:18
+  category: one
+  user: one
+
+two:
+  content: MyText
+  list_exams: MyText
+  time_public: 2019-04-04 17:06:18
+  category: two
+  user: two

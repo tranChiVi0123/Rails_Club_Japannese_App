@@ -1,0 +1,54 @@
+<div class="col-md-12">
+    <div class="recent-posts">
+        <article class="post">
+            <div class="date">
+                <span class="day"><%= @test_session.created_at.strftime("%d") %></span>
+                <span class="month"><%= @test_session.created_at.strftime("%b") %></span>
+            </div>
+            <div class="post-content">
+                <h2>
+                    <a href="#"><%= @test_session.content %></a>
+                </h2>
+                <div class="post-meta">
+                    <span><i class="fa fa-user"></i> Giáo viên
+                        <a href="/users/<%= @test_session.user.id %>">
+                            <% if @test_session.user.name.blank? %>
+                            <%= @test_session.user.email %>
+                            <% else %>
+                            <%= @test_session.user.name %>
+                            <% end %>
+                        </a>
+                    </span>
+                    <% if isAdmin %>
+                    <span>
+                        <a href="/test_sessions/<%= @test_session.id %>/edit"><i class="fa fa-edit"> Chỉnh sửa</i></a>
+                    </span>
+                    <% end %>
+                </div>
+                <div class="row">
+                    <p><span><b>Thời gian kiểm tra: </b><i class="fa fa-calendar"></i> <%= @test_session.time_public %> | <b> Thời lượng: <i class="fa fa-clock-o"></i> </b><%= @test_session.time_remaining %> phút</span></p>
+                    <%if allow_examinations %>
+                    <form class="form-horizontal" method="post" accept-charset="UTF-8" action="/test_sessions/create_test_paper">
+                        <%= csrf %>
+                        <%= optionsForm("session", "create_test_paper")%>
+                        <div class="form-group">
+                            <button class="btn btn-3d btn-secondary mr-xs mb-sm" name="session[submit]" type="submit" value="<%= @test_session.id%>">Thi</button>
+                        </div>
+                    </form>
+                    <% end %>
+                    <p><span><i class="fa fa-users"></i> Danh sách thí sinh</span></p>
+                    <div class="row sample-icon-list">
+                        <% sms = SessionMember.where(test_session_id: @test_session.id)%>
+                        <% sms.each do |sm|%>
+                        <% u = sm.user%>
+                        <div class="col-xs-12 col-md-6 col-lg-6 sample-icon">
+						    <a href="/users/<%= u.id%>"><i class="icon-user icons"></i><span class="name"><b>Email:<%= u.email %> | Class:<%= Classs.find(ClassMember.where(user_id: u.id).take.classs_id).name%></b></span></a>
+					    </div>
+                        <% end %>
+                    </div>
+                    
+                </div>
+            </div>
+        </article>
+    </div>
+</div>

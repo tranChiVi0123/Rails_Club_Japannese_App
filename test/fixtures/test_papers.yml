@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  point: 1
+  exam: one
+  category: one
+  user: one
+
+two:
+  content: MyText
+  point: 1
+  exam: two
+  category: two
+  user: two

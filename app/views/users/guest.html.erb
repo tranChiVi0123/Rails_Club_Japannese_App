@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="owl-carousel owl-theme" data-plugin-options="{'items': 1, 'margin': 10}">
+            <div>
+                <span class="img-thumbnail">
+                    <img alt="" height="300" class="img-responsive" src="/img/team/team-3.jpg">
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <% @user.name.blank? ? n = "User..." : n = @user.name %>
+        <h2 class="mb-none"><strong><%= n %></strong></h2>
+        <% @user.role == 2 ? r = "Administrator" : r = "Vip members" %>
+        <h4 class="heading-primary"><i class="fa fa-user-secret"></i><%= r %></h4>
+
+        <hr class="solid">
+
+        <ul class="list list-icons">
+            <li><i class="fa fa-fa"></i> Tên: <%= @user.name %></li>
+            <li><i class="icon-user icons"></i> Email: <%= @user.email %></li>
+            <li><i class="fa fa-newspaper-o"></i> Tổng số bài post: <%= @user.posts.count%></li>
+        </ul>
+
+    </div>
+</div>

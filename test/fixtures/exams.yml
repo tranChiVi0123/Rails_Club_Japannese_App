@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  time_remaining: 1
+  list_questions: MyText
+  category: 
+  user: 
+
+two:
+  title: MyString
+  time_remaining: 1
+  list_questions: MyText
+  category: 
+  user: 
