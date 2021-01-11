@@ -17,7 +17,7 @@ gem 'unirest'
 #countdown timer
 gem "jquery-countdown-rails"
 #markdown redcarpet
-gem 'redcarpet', '~>3.0.0'
+gem 'redcarpet', '~>3.5.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
