@@ -9,7 +9,7 @@ gem 'rails', '~> 5.2.3'
 gem 'sqlite3', '~> 1.3.6'
 #gem 'pg','~> 1.1.4'
 
-gem 'clearance', '~> 1.16.2'
+gem 'clearance', '~> 2.5.0'
 gem 'faker', '~> 1.6', '>= 1.6.3'
 #search 
 gem "ransack"
